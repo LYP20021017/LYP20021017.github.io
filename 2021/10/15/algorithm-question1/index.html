@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, java|algorithm">
+    <meta name="keywords" content="每日小练（1）, java|algorithm">
     <meta name="description" content="这里是黎意鹏的博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Blog of Abstract</title>
+    <title>每日小练（1） | Blog of Abstract</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">每日小练（1）</h1>
                 </div>
             </div>
         </div>
@@ -442,7 +442,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-07
+                    2021-10-15
                 </div>
                 
 
@@ -463,19 +463,38 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <h2 id="求解最长双回文子串问题（今日小练）"><a href="#求解最长双回文子串问题（今日小练）" class="headerlink" title="求解最长双回文子串问题（今日小练）"></a>求解最长双回文子串问题（今日小练）</h2><p><strong>题目大意</strong></p>
+<p>顺序和逆序读起来完全一样的串叫做回文串。比如acbca是回文串，而abc不是（abc的顺序为“abc”，逆序为“cba”，不相同）。输入长度为n的串S，求S的最长双回文子串T,即可将T分为两部分X，Y，（|X|,|Y|≥1）且X和Y都是回文串。</p>
+<p><strong>输入</strong></p>
+<p>一行由小写英文字母组成的字符串S。2≤|S|≤10^5</p>
+<p><strong>输出</strong></p>
+<p>一个整数，表示最长双回文子串的长度</p>
+<p><strong>样例输入</strong></p>
+<p>baacaabbacabb</p>
+<p><strong>样例输出</strong></p>
+<p>12 </p>
+<p>解释：baacaabbacabb 整体上保证其左右子串最长的分法是 baacaab bacab b 其中左串为baacaab 右串为bacab 其字符个数和为12</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>首先我们要明白一点，双回文字串，并不是表示其是个回文串，而是其左子串和右子串为回文串然后连接成双回文串。<br>那么我们应该如何保证你给我一个字符串，我能够快速地求解出其最长的双回文字串呢？<br>这是个很简单的问题。最粗劣的我们可以选择暴力地求解，这种方法的代价是O(n^2)，即暴力地对整个串进行循环，每循环一个字符便去利用变量去收集<br>其左右串最长回文串的长度，最后将结果集取最大值便可以获取结果。但是显然这种暴力求解在此题中代价相对大了。<br>我们可以采取动态规划的做法。这样我们可以将代价降到O(n)。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>以样例为例,以下是动态规划的思路:  </p>
+<p>baacaabbacabb 我们先自左向右求取其各个位置上最长的回文串长度然后将其装载入一个数组Array1中，然后我们再自右向左进行相同的操作将其装载在另一个数组Array2中，最后汇总<br>取最大值。我们再声明一个char数组这个数组包含着baacaabbacabb的所有字符。  </p>
+<p>先是进行对该串的循环自左向右的求取 第一次循环到第一个字符，此时字符是b，这时从左到右截至到第一个字符b,囊括的字符为只有1个b作为回文串所以Array1[0]=1  </p>
+<p>第二次循环此时到第二个字符，此时是a,这时从左到右截至到第二个字符a,囊括的字符为ba,不构成回文因此Array1[1]=1  </p>
+<p>第三次循环此时到第三个字符，此时是a,这时从左到右截至到第三个字符a,囊括的字符为baa,aa构成回文因此拿到当前前一位Array1数组中的值1在其之上加1<br>Array1[2]=Array[2-1]+1=Array[1]+1=1+1=2,至此从第一个字符到第一个字符最长回文串长为1，至此从第一个字符到第二个字符最长回文串长为1，至此从第一个字符到第三个字符最长回文串长为2，<br>此时我们假设循环到第i个字符那么我们可以得出这样一个转移方程 </p>
+<p>if(char[i-1]==char[i])  then Array1[i]=Array1[i-1]+1</p>
+<p>当然这只是转移方程的一部分并不是完全的转移方程  </p>
+<p>我们再进一步进行循环</p>
+<p>第四次循环此时到第四个字符，此时是c,这时从左到右截至到第四个字符c,囊括的字符为baac,我们开始考虑了，假若这个第四个字符c是a那么就可以应用上面的转移方程了<br>可是他不是那么我们应该如何再进行下去呢？此时我们该考虑更多的东西了，首先截至到现在我们处在c的位置我们知道baa这个串中最长的回文串为2，<br>我们现在要求baa?这个串中的最长回文串长了，这个？号是假设我们现在不知道现在是字符c,此时重点来了！现在baa最长回文串为2，  </p>
+<p>字符串“baa?”表明?字符前面两个字符已经构成回文串了！那么如何那么我们的?字符向前面第三个字符进行比对如果？=b,那么岂不是构成baab了吗？<br>那么一瞬间baa?从最长回文串为2，多加了两个字符长度变成4了那么我们是不是又可以得到一部分的转移方程呢！！</p>
+<p>if(char[i]!=char[i-1]) then </p>
+<p>if(i-Array1[i-1]-1&gt;-1){<br>    if(char[i-Array1[i-1]-1]==char[i]){<br>        Array1[i]=Array[i-1]+2<br>    }<br>}</p>
+<p>由此我们推到了两部分的方程  </p>
+<p>如果上面的条件都不成立：</p>
+<p>即char[i]!=char[i-1]&amp;&amp;i-Array1[i-1]-1&lt;=-1或者 char[i]!=char[i-1]&amp;&amp;i-Array1[i-1]-1&gt;-1但是char[i-Array1[i-1]-1]!=char[i]</p>
+<p>那么Array1[i]=1;至此方程的伪代码就全出来了！<br>接下来进行推导便能实现了。是不是很简单呢？以下边是笔者进行的代码实现。</p>
+<p><em>ps.(⌐■_■)码字真累啊，为了读者能看懂，已经讲的很详细了，我觉得这是用文字讲解这题最详细的一篇了ORZ~~~如有错误之处还望诸君指正ヾ(•ω•`)o</em></p>
+<hr>
+<h2 id="java代码实现"><a href="#java代码实现" class="headerlink" title="java代码实现"></a>java代码实现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">package practiceforme;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">			System.out.println(getAnswer(&quot;baacaabbacabb&quot;));</span><br><span class="line">			System.out.println(getAnswer(&quot;caabaacaabaacc&quot;));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static int getAnswer(String str) &#123;</span><br><span class="line">		char[] charArrayLeft=str.toCharArray();</span><br><span class="line">		char[] charArrayRight=new char[str.length()];</span><br><span class="line">		for(int i=0;i&lt;str.length();i++) &#123;</span><br><span class="line">			charArrayRight[str.length()-1-i]=charArrayLeft[i];</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		int[] intArrayLeft=getStatusArray(charArrayLeft);</span><br><span class="line">		int[] intArrayRight=getStatusArray(charArrayRight);</span><br><span class="line">		</span><br><span class="line">		int max=Integer.MIN_VALUE;</span><br><span class="line">		for(int i=0;i&lt;str.length()-1;i++) &#123;</span><br><span class="line">			int currentValue=intArrayLeft[i]+intArrayRight[i+1];</span><br><span class="line">			if(max&lt;currentValue) &#123;</span><br><span class="line">				max=currentValue;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return max;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static int[] getStatusArray(char[] charArray) &#123;</span><br><span class="line">		int[] array=new int[charArray.length];</span><br><span class="line">		array[0]=1;</span><br><span class="line">		array[1]=array[0]==array[1]?2:1;</span><br><span class="line">//		if(charArray[0]==charArray[1]) &#123;</span><br><span class="line">//			array[1]=2;</span><br><span class="line">//		&#125;else &#123;</span><br><span class="line">//			array[1]=1;</span><br><span class="line">//		&#125;</span><br><span class="line">		for(int i=2;i&lt;array.length;i++) &#123;</span><br><span class="line">			int currentCompare=i-array[i-1]-1;</span><br><span class="line">			if(currentCompare&gt;-1&amp;&amp;charArray[currentCompare]==charArray[i]) &#123;</span><br><span class="line">				array[i]=array[i-1]+2;</span><br><span class="line">			&#125;else if (charArray[i-1]==charArray[i]) &#123;</span><br><span class="line">				array[i]=array[i-1]+1;</span><br><span class="line">			&#125;else &#123;</span><br><span class="line">				array[i]=1;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return array;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
                 
             </div>
@@ -502,7 +521,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://LYP20021017.github.io/2021/10/07/hello-world/">http://LYP20021017.github.io/2021/10/07/hello-world/</a>
+                    <a href="http://LYP20021017.github.io/2021/10/15/algorithm-question1/">http://LYP20021017.github.io/2021/10/15/algorithm-question1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -709,9 +728,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/10/15/algorithm-question1/">
                     <div class="card-image">
@@ -729,9 +749,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -740,6 +760,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -747,7 +768,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/10/07/hello-world/">
@@ -777,7 +798,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
